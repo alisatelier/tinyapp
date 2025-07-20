@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/alisatelier/tinyapp/issues"
   },
-  "homepage": "https://github.com/alisatelier/tinyapp#readme"
+  "homepage": "https://github.com/alisatelier/tinyapp#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
