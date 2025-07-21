@@ -10,15 +10,20 @@ const urlDatabase = {
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.send("Hello!")
-})
+  res.send("Hello!");
+});
 
 app.get("/urls", (req, res) => {
   const templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
 });
 
+app.get("/urls/:id", (req, res) => {
+  const urlPath = req.params.id;
+  const templateVars = { id: urlPath, longURL: urlDatabase[urlPath] };
+  res.render("urls_show", templateVars);
+});
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`)
-})
+  console.log(`Example app listening on port ${PORT}!`);
+});
