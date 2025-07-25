@@ -37,24 +37,34 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
 
+//generates a random 6 digit alphanumeric code for urlShort and updates the database based on form submission. while ensures the number is unique.
 app.post("/urls", (req, res) => {
   const urlShort = generateRandomString();
-  const urlLong = req.body.longURL;
+  while (urlDatabase[urlshort]) {
+    urlshort = generateRandomString();
+  };
 
+  const urlLong = req.body.longURL;
   urlDatabase[urlShort] = urlLong,
 
-
-    console.log("Updated Databse: ", urlDatabase);
+  console.log("Updated Databse: ", urlDatabase);
   res.redirect(`/urls/${urlShort}`);
 });
 
-console.log(urlDatabase);
+// renders new page for each unique id.
 app.get("/urls/:id", (req, res) => {
-  const urlPath = req.params.id;
-  const templateVars = { id: urlPath, longURL: urlDatabase[urlPath] };
+  const id = req.params.id;
+  const longURL = urlDatabase[id];
+
+  if (!urlDatabase[id]) {
+    return res.status(404).send("URL not found");
+  }
+  const templateVars = { id, longURL };
+
   res.render("urls_show", templateVars);
 });
 
+//redirects to the longURL associated with the id. 
 app.get("/u/:id", (req, res) => {
   const urlPath = req.params.id;
   const longURL = urlDatabase[urlPath];
