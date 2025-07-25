@@ -51,9 +51,14 @@ app.post("/urls", (req, res) => {
 console.log(urlDatabase);
 app.get("/urls/:id", (req, res) => {
   const urlPath = req.params.id;
-  const urlEntry = urlDatabase[urlPath];
-  const templateVars = { id: urlPath, longURL: urlEntry };
+  const templateVars = { id: urlPath, longURL: urlDatabase[urlPath] };
   res.render("urls_show", templateVars);
+});
+
+app.get("/u/:id", (req, res) => {
+  const urlPath = req.params.id;
+  const longURL = urlDatabase[urlPath];
+  res.redirect(longURL);
 });
 
 app.listen(PORT, () => {
