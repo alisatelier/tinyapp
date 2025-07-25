@@ -40,8 +40,9 @@ app.get("/urls/new", (req, res) => {
 //generates a random 6 digit alphanumeric code for urlShort and updates the database based on form submission. while ensures the number is unique.
 app.post("/urls", (req, res) => {
   const urlShort = generateRandomString();
-  while (urlDatabase[urlshort]) {
-    urlshort = generateRandomString();
+
+  while (urlDatabase[urlShort]) {
+    urlShort = generateRandomString();
   };
 
   const urlLong = req.body.longURL;
