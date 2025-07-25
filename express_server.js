@@ -37,18 +37,18 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
 
-//generates a random 6 digit alphanumeric code for urlShort and updates the database based on form submission. while ensures the number is unique.
+//generates a random 6 digit alphanumeric code for urlShort and updates the database based on form submission. 
+//While loop ensures the number is unique.
 app.post("/urls", (req, res) => {
-  const urlShort = generateRandomString();
-
+  let urlShort = generateRandomString();
   while (urlDatabase[urlShort]) {
     urlShort = generateRandomString();
   };
 
   const urlLong = req.body.longURL;
-  urlDatabase[urlShort] = urlLong,
+  urlDatabase[urlShort] = urlLong;
 
-  console.log("Updated Databse: ", urlDatabase);
+  //console.log("Updated Databse: ", urlDatabase);
   res.redirect(`/urls/${urlShort}`);
 });
 
