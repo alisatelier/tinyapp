@@ -67,15 +67,32 @@ app.get("/urls/:id", (req, res) => {
 
 //redirects to the longURL associated with the id. 
 app.get("/u/:id", (req, res) => {
-  const urlPath = req.params.id;
-  const longURL = urlDatabase[urlPath];
+  const id = req.params.id;
+  const longURL = urlDatabase[id];
   res.redirect(longURL);
 });
 
+app.post("/urls/:id/edit", (req, res) =>{
+  const id = req.params.id
+
+    if (!urlDatabase[id]) {
+    return res.status(404).send("Cannot edit: URL not found.");
+  }
+
+    const urlLong = req.body.longURL;
+    urlDatabase[id] = urlLong;
+
+res.redirect(`/urls/${id}`)
+})
+
 app.post("/urls/:id/delete", (req, res) =>{
   const id = req.params.id
-  delete urlDatabase[id]
 
+    if (!urlDatabase[id]) {
+    return res.status(404).send("Cannot delete: URL not found.");
+  }
+
+  delete urlDatabase[id]
   res.redirect("/urls")
 })
 app.listen(PORT, () => {
