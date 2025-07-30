@@ -31,18 +31,18 @@
           </tr>
         </thead>
         <tbody>
-          <% for (let id in urls) { %>
+          <% for (let shortId in urls) { %>
             <tr>
-              <td><%= id %></td>
-              <td><%= urls[id] %></td>
-              <td><a href = "/u/<%= id %>" > /u/<%= id %></a></td>
+              <td><%= shortId %></td>
+              <td><%= urls[shortId] %></td>
+              <td><a href = "/u/<%= shortId %>" > /u/<%= shortId %></a></td>
               <td>
-                <form action="/urls/<%= id %>" >
+                <form action="/urls/<%= shortId %>" >
                  <button type="submit">Edit</button>
                </form>
               </td>
               <td>
-                <form action="/urls/<%= id %>/delete" method="POST">
+                <form action="/urls/<%= shortId %>/delete" method="POST">
                  <button type="submit">Delete</button>
                </form>
               </td>

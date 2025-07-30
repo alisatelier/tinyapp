@@ -54,47 +54,58 @@ app.post("/urls", (req, res) => {
 
 // renders new page for each unique id.
 app.get("/urls/:id", (req, res) => {
-  const id = req.params.id;
-  const longURL = urlDatabase[id];
+  const shortId = req.params.id;
+  const longURL = urlDatabase[shortId];
 
-  if (!urlDatabase[id]) {
+  if (!urlDatabase[shortId]) {
     return res.status(404).send("URL not found");
   }
-  const templateVars = { id, longURL };
+  const templateVars = { shortId, longURL };
 
   res.render("urls_show", templateVars);
 });
 
 //redirects to the longURL associated with the id. 
 app.get("/u/:id", (req, res) => {
-  const id = req.params.id;
-  const longURL = urlDatabase[id];
+  const shortId = req.params.id;
+  const longURL = urlDatabase[shortId];
   res.redirect(longURL);
 });
 
+//overswirtes the existing longURL with a new webpage.
 app.post("/urls/:id/edit", (req, res) =>{
-  const id = req.params.id
+  const shortId = req.params.id
 
-    if (!urlDatabase[id]) {
+    if (!urlDatabase[shortId]) {
     return res.status(404).send("Cannot edit: URL not found.");
   }
 
     const urlLong = req.body.longURL;
-    urlDatabase[id] = urlLong;
+    urlDatabase[shortId] = urlLong;
 
-res.redirect(`/urls/${id}`)
+res.redirect(`/urls/${shortId}`)
 })
 
-app.post("/urls/:id/delete", (req, res) =>{
-  const id = req.params.id
 
-    if (!urlDatabase[id]) {
+//deletes the associated short/longurl from the database.
+app.post("/urls/:id/delete", (req, res) =>{
+  const shortId = req.params.id
+
+    if (!urlDatabase[shortId]) {
     return res.status(404).send("Cannot delete: URL not found.");
   }
 
-  delete urlDatabase[id]
+  delete urlDatabase[shortId]
   res.redirect("/urls")
 })
+
+app.post("/login", (req, res) =>{
+const username = req.body.username
+  res.cookie("username", username)
+
+  res.redirect("/urls")
+})
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
