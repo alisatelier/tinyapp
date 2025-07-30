@@ -18,6 +18,8 @@
   </head>
   <body>
     <%- include('partials/_header') %>
+
+   <main>
 <form class="form-inline" action="/register" method="POST">
         <div class="form-group mb-2">
           <label for="email">Enter your email</label>
@@ -25,7 +27,8 @@
             class="form-control"
             type="email"
             name="email"
-            placeholder="youremail@domain.com"
+            required
+            placeholder="Email"
             style="width: 300px; margin: 1em"
           />
             <label for="password">Enter your password </label>
@@ -33,11 +36,14 @@
             class="form-control"
             type="password"
             name="password"
-            placeholder="********"
+            required
+            placeholder="Password"
             style="width: 300px; margin: 1em"
           />
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>  
+      
+  </main> 
   </body>
 </head>
 </html>

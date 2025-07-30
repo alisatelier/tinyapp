@@ -18,31 +18,39 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
     </div>
+
+
+    <!-- Shows username active and logout button -->
 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <% if (username) { %>
-        <span class="nav-item nav-link text-white">Hello, <%= username %>!</span>
+        <% if (user) { %>
+        <span class="nav-item nav-link text-white">Hello, <%= user.email %>!</span>
         <form action = "/logout" method = "POST">
           <button type="submit">Logout</button>
         </form>
         <% } %>
 
-       
- <% if (!username) { %> 
+    <!-- Login feature, disappears when cookie active-->    
+ <% if (!user) { %> 
   <form action="/login" method = "POST" >
               <label for="login"></label>
               <input
                 class="form-control"
-                type="text"
-                name="username"
-                placeholder="username"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
                 style="width: 300px" />
-             
+             <input
+                class="form-control"
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                style="width: 300px" />
                  <button type="submit">Login</button>
-
-                 
                </form>
-<% } %>
+                <% } %>
     
                 </div>
     </div>
