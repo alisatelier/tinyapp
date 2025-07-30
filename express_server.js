@@ -55,7 +55,6 @@ app.post("/urls", (req, res) => {
   const urlLong = req.body.longURL;
   urlDatabase[urlShort] = urlLong;
 
-  //console.log("Updated Databse: ", urlDatabase);
   res.redirect(`/urls/${urlShort}`);
 });
 
@@ -79,6 +78,14 @@ app.get("/u/:id", (req, res) => {
   res.redirect(longURL);
 });
 
+//renders registration page
+app.get ("/register", (req, res) =>{
+const templateVars = {
+    username: req.cookies["username"]
+  }
+  res.render("register", templateVars)
+
+})
 //overswirtes the existing longURL with a new webpage.
 app.post("/urls/:id/edit", (req, res) =>{
   const shortId = req.params.id
@@ -106,6 +113,8 @@ app.post("/urls/:id/delete", (req, res) =>{
   res.redirect("/urls")
 })
 
+
+//updates login cookie and displays username
 app.post("/login", (req, res) =>{
 const username = req.body.username
   res.cookie("username", username)
@@ -113,11 +122,17 @@ const username = req.body.username
   res.redirect("/urls")
 })
 
+//logs out and clears cookie
 app.post("/logout", (req, res) =>{
-
   res.clearCookie("username")
 
 res.redirect("/urls")
+})
+
+app.post("/register", (req, res) => {
+
+
+  res.redirect("/urls")
 })
 
 app.listen(PORT, () => {
