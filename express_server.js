@@ -192,15 +192,25 @@ app.post("/register", (req, res) => {
     return res.status(400).send("Email and password are required.");
   }
 
+  const emailExists = Object.values(users).find(user => user.email === userEmail);
+  if (emailExists) {
+    return res.status(400).send("Email already registered.");
+  }
+
+  if (!userEmail.trim()) {
+    return res.status(400).send("Please provide valid email.");
+  }
+  if (!userPassword.trim()) {
+    return res.status(400).send("Please provide valid password.");
+  }
   users[uniqueUser] = {
     id: uniqueUser,
     email: userEmail,
     password: userPassword,
   };
 
-
   res.cookie("user_id", uniqueUser);
-console.log(users)
+  console.log(users);
   res.redirect("/urls");
 });
 
