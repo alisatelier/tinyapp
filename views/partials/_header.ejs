@@ -22,18 +22,28 @@
       <div class="navbar-nav">
         <% if (username) { %>
         <span class="nav-item nav-link text-white">Hello, <%= username %>!</span>
+        <form action = "/logout" method = "POST">
+          <button type="submit">Logout</button>
+        </form>
         <% } %>
 
+       
+ <% if (!username) { %> 
   <form action="/login" method = "POST" >
               <label for="login"></label>
               <input
-                class="form-control-2"
+                class="form-control"
                 type="text"
                 name="username"
                 placeholder="username"
                 style="width: 300px" />
+             
                  <button type="submit">Login</button>
+
+                 
                </form>
+<% } %>
+    
                 </div>
     </div>
   </nav>
