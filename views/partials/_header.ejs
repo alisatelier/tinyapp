@@ -20,6 +20,10 @@
     </div>
 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
+        <% if (username) { %>
+        <span class="nav-item nav-link text-white">Hello, <%= username %>!</span>
+        <% } %>
+
   <form action="/login" method = "POST" >
               <label for="login"></label>
               <input

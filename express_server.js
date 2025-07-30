@@ -1,8 +1,10 @@
 const express = require("express");
+const cookieParser = require('cookie-parser')
 const app = express();
 const PORT = 8080;
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const generateRandomString = function() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,12 +31,17 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = { 
+   username: req.cookies["username"],
+   urls: urlDatabase };
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  const templateVars = {
+    username: req.cookies["username"]
+  }
+  res.render("urls_new", templateVars);
 });
 
 //generates a random 6 digit alphanumeric code for urlShort and updates the database based on form submission. 
@@ -60,7 +67,7 @@ app.get("/urls/:id", (req, res) => {
   if (!urlDatabase[shortId]) {
     return res.status(404).send("URL not found");
   }
-  const templateVars = { shortId, longURL };
+  const templateVars = { shortId, longURL, username: req.cookies["username"] };
 
   res.render("urls_show", templateVars);
 });
